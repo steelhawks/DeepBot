@@ -13,10 +13,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -25,75 +23,58 @@ import frc.robot.Robot;
 
 public class Drivetrain extends Subsystem 
 {
-  //SPARK MAX LEFT MOTORS
-  private final CANSparkMax LEFT_M_ONE;
-  private final CANSparkMax LEFT_M_TWO;
-  private final CANSparkMax LEFT_M_THREE;
-  
-  //SPARK MAX RIGHT MOTOR
-  private final CANSparkMax RIGHT_M_ONE;
-  private final CANSparkMax RIGHT_M_TWO;
-  private final CANSparkMax RIGHT_M_THREE;
+  //SPARK MAX MOTORS
+  private final CANSparkMax m_leftOne, m_leftTwo, m_leftThree, m_rightOne, m_rightTwo, m_rightThree;
 
   //SPEED CONTROLLER GROUPS
-  private final SpeedControllerGroup LEFT_M_GROUP;
-  private final SpeedControllerGroup RIGHT_M_GROUP;
+  private final SpeedControllerGroup m_leftGroup, m_rightGroup;
 
   //DIFFERENTIAL DRIVE
-  private final DifferentialDrive DIFF_DRIVE;
+  private final DifferentialDrive diffDrive;
 
   //SHIFTING SOLENOIDS
-  private final DoubleSolenoid SHIFT_SOL;
+  private final DoubleSolenoid sol_shift;
 
-  //NAVX MXP GYRO
-  private final AHRS GYRO;
-  private final double KP_GYRO;
+  //NAVX MXP gyro
+  private final AHRS gyro;
+  private final double gyro_constant;
 
   //NEO MOTOR ENCODERS
-  public CANEncoder leftNeoEnc;
-  public CANEncoder rightNeoEnc;
-
-  //GRAYHILL OPTICAL ENCODERS
-  public Encoder leftEnc;
-  public Encoder rightEnc;
+  public CANEncoder enc_left, enc_right;
 
   //DRIVETRAIN CONSTRUCTOR
   public Drivetrain() 
   {
     //SPARK MAX LEFT MOTORS
-    this.LEFT_M_ONE = new CANSparkMax(Robot.ROBOTMAP.LEFT_MOTOR_PORT_ONE, MotorType.kBrushless);
-    this.LEFT_M_TWO = new CANSparkMax(Robot.ROBOTMAP.LEFT_MOTOR_PORT_TWO, MotorType.kBrushless);
-    this.LEFT_M_THREE = new CANSparkMax(Robot.ROBOTMAP.LEFT_MOTOR_PORT_THREE, MotorType.kBrushless);
+    this.m_leftOne = new CANSparkMax(Robot.ROBOTMAP.m_leftOne, MotorType.kBrushless);
+    this.m_leftTwo = new CANSparkMax(Robot.ROBOTMAP.m_leftTwo, MotorType.kBrushless);
+    this.m_leftThree = new CANSparkMax(Robot.ROBOTMAP.m_leftThree, MotorType.kBrushless);
     
     //SPARK MAX RIGHT MOTORS
-    this.RIGHT_M_ONE = new CANSparkMax(Robot.ROBOTMAP.RIGHT_MOTOR_PORT_ONE, MotorType.kBrushless);
-    this.RIGHT_M_TWO = new CANSparkMax(Robot.ROBOTMAP.RIGHT_MOTOR_PORT_TWO, MotorType.kBrushless);
-    this.RIGHT_M_THREE = new CANSparkMax(Robot.ROBOTMAP.RIGHT_MOTOR_PORT_THREE, MotorType.kBrushless);
+    this.m_rightOne = new CANSparkMax(Robot.ROBOTMAP.m_rightOne, MotorType.kBrushless);
+    this.m_rightTwo = new CANSparkMax(Robot.ROBOTMAP.m_rightTwo, MotorType.kBrushless);
+    this.m_rightThree = new CANSparkMax(Robot.ROBOTMAP.m_rightThree, MotorType.kBrushless);
 
     //SPEED CONTROLLER GROUPS
-    this.LEFT_M_GROUP = new SpeedControllerGroup(this.LEFT_M_ONE, this.LEFT_M_TWO, this.LEFT_M_THREE);
-    this.RIGHT_M_GROUP = new SpeedControllerGroup(this.RIGHT_M_ONE, this.RIGHT_M_TWO, this.RIGHT_M_THREE);
+    this.m_leftGroup = new SpeedControllerGroup(this.m_leftOne, this.m_leftTwo, this.m_leftThree);
+    this.m_rightGroup = new SpeedControllerGroup(this.m_rightOne, this.m_rightTwo, this.m_rightThree);
 
     //DIFFERENTIAL DRIVE
-    this.DIFF_DRIVE = new DifferentialDrive(this.LEFT_M_GROUP, this.RIGHT_M_GROUP);
+    this.diffDrive = new DifferentialDrive(this.m_leftGroup, this.m_rightGroup);
 
     //NAVX MXP GYRO
-    this.GYRO = new AHRS(SPI.Port.kMXP);
-    this.KP_GYRO = Robot.ROBOTMAP.KP_GYRO;
+    this.gyro = new AHRS(SPI.Port.kMXP);
+    this.gyro_constant = Robot.ROBOTMAP.gyro_constant;
 
     //SHIFTING SOLENOIDS
-    this.SHIFT_SOL = new DoubleSolenoid(Robot.ROBOTMAP.SHIFT_PORT_ON, Robot.ROBOTMAP.SHIFT_PORT_OFF);
+    this.sol_shift = new DoubleSolenoid(Robot.ROBOTMAP.sol_shiftOn, Robot.ROBOTMAP.sol_shiftOff);
 
     //NEO MOTOR ENCODERS
-    this.leftNeoEnc = this.LEFT_M_ONE.getEncoder();
-    this.rightNeoEnc = this.RIGHT_M_ONE.getEncoder();
-
-    //GRAYHILL OPTICAL ENCODERS
-    this.leftEnc = new Encoder(Robot.ROBOTMAP.LEFT_ENC_PORT_A, Robot.ROBOTMAP.LEFT_ENC_PORT_B, false, EncodingType.k4X);
-    this.rightEnc = new Encoder(Robot.ROBOTMAP.RIGHT_ENC_PORT_A, Robot.ROBOTMAP.RIGHT_ENC_PORT_B, false, EncodingType.k4X);
+    this.enc_left = this.m_leftOne.getEncoder();
+    this.enc_right = this.m_rightOne.getEncoder();
 
     //SET ROBOT TO LOW GEAR
-    SHIFT_SOL.set(DoubleSolenoid.Value.kReverse);
+    sol_shift.set(DoubleSolenoid.Value.kReverse);
 
     //SET MOTORS TO BREAK
     setMotorsBrake();
@@ -106,35 +87,35 @@ public class Drivetrain extends Subsystem
 
   //DRIVING METHOD
   public void arcadeDrive(Joystick stick) {
-    this.DIFF_DRIVE.arcadeDrive(stick.getY(), -stick.getTwist());
+    this.diffDrive.arcadeDrive(stick.getY(), -stick.getTwist());
   }
 
   //SHIFTING METHOD -- if { LOW } else { HIGH }
   public void shiftGear() {
-    if(SHIFT_SOL.get() == DoubleSolenoid.Value.kForward) {
-      this.SHIFT_SOL.set(DoubleSolenoid.Value.kReverse);
+    if(sol_shift.get() == DoubleSolenoid.Value.kForward) {
+      this.sol_shift.set(DoubleSolenoid.Value.kReverse);
     } else {
-      this.SHIFT_SOL.set(DoubleSolenoid.Value.kForward);
+      this.sol_shift.set(DoubleSolenoid.Value.kForward);
     }
   }
 
-  //MOVING STRAIGHT USING THE GYRO METHOD
+  //MOVING STRAIGHT USING THE gyro METHOD
   public void gyroMoveStraight(double speed)
   {
-    this.DIFF_DRIVE.arcadeDrive(speed, -this.GYRO.getAngle() * this.KP_GYRO);
+    this.diffDrive.arcadeDrive(speed, -this.gyro.getAngle() * this.gyro_constant);
   }
 
-  //MOVING STRAIGHT USING GYRO AND ANGLE VALUE METHOD
+  //MOVING STRAIGHT USING gyro AND ANGLE VALUE METHOD
   public void gyroMoveStraight(double speed, double angle)
   {
-    this.DIFF_DRIVE.arcadeDrive(-speed, -angle * this.KP_GYRO);
+    this.diffDrive.arcadeDrive(-speed, -angle * this.gyro_constant);
   }
 
   //ROTATE ROBOT
   public void rotate(double speed)
   {
-    this.LEFT_M_GROUP.set(speed);
-    this.RIGHT_M_GROUP.set(speed);
+    this.m_leftGroup.set(speed);
+    this.m_rightGroup.set(speed);
   }
 
   //STOP ROBOT
@@ -152,56 +133,56 @@ public class Drivetrain extends Subsystem
   //SET MOTORS TO COAST
   public void setMotorsCoast()
   {
-    this.LEFT_M_ONE.setIdleMode(IdleMode.kCoast);
-    this.LEFT_M_TWO.setIdleMode(IdleMode.kCoast);
-    this.LEFT_M_THREE.setIdleMode(IdleMode.kCoast);
-    this.RIGHT_M_ONE.setIdleMode(IdleMode.kCoast);
-    this.RIGHT_M_TWO.setIdleMode(IdleMode.kCoast);
-    this.RIGHT_M_THREE.setIdleMode(IdleMode.kCoast);
+    this.m_leftOne.setIdleMode(IdleMode.kCoast);
+    this.m_leftTwo.setIdleMode(IdleMode.kCoast);
+    this.m_leftThree.setIdleMode(IdleMode.kCoast);
+    this.m_rightOne.setIdleMode(IdleMode.kCoast);
+    this.m_rightTwo.setIdleMode(IdleMode.kCoast);
+    this.m_rightThree.setIdleMode(IdleMode.kCoast);
   }
 
   //SET MOTORS TO BRAKE
   public void setMotorsBrake()
   {
-    this.LEFT_M_ONE.setIdleMode(IdleMode.kCoast);
-    this.LEFT_M_TWO.setIdleMode(IdleMode.kCoast);
-    this.LEFT_M_THREE.setIdleMode(IdleMode.kBrake);
-    this.RIGHT_M_ONE.setIdleMode(IdleMode.kCoast);
-    this.RIGHT_M_TWO.setIdleMode(IdleMode.kCoast);
-    this.RIGHT_M_THREE.setIdleMode(IdleMode.kBrake);
+    this.m_leftOne.setIdleMode(IdleMode.kCoast);
+    this.m_leftTwo.setIdleMode(IdleMode.kCoast);
+    this.m_leftThree.setIdleMode(IdleMode.kBrake);
+    this.m_rightOne.setIdleMode(IdleMode.kCoast);
+    this.m_rightTwo.setIdleMode(IdleMode.kCoast);
+    this.m_rightThree.setIdleMode(IdleMode.kBrake);
   }
 
-  public double getLeftEncRate() {
-    return this.leftEnc.getRate();
+  public double getLeftEncPosition() {
+    return this.enc_left.getPosition();
   }
 
-  public double getLeftEncDist() {
-    return this.leftEnc.getDistance();
+  public double getLeftEncVelocity() {
+    return this.enc_left.getVelocity();
   }
 
-  public double getRightEncRate() {
-    return this.rightEnc.getRate();
+  public double getRightEncPosition() {
+    return this.enc_right.getPosition();
   }
 
-  public double getRightEncDist() {
-    return this.rightEnc.getDistance();
+  public double getRightEncVelocity() {
+    return this.enc_right.getVelocity();
   }
 
-  public AHRS getGyro()
+  public AHRS getgyro()
   {
-    return this.GYRO;
+    return this.gyro;
   }
 
-  public double getGyroAngle() {
-    return this.GYRO.getAngle(); 
+  public double getgyroAngle() {
+    return this.gyro.getAngle(); 
   }
 
-  public double getGyroAxis() {
-    return this.GYRO.getBoardYawAxis().board_axis.getValue();
+  public double getgyroAxis() {
+    return this.gyro.getBoardYawAxis().board_axis.getValue();
   }
 
-  public void resetGyro() {
-    this.GYRO.reset();
-    this.GYRO.zeroYaw();
+  public void resetgyro() {
+    this.gyro.reset();
+    this.gyro.zeroYaw();
   }
 }
