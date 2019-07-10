@@ -8,8 +8,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.ElevatorControl;
 import frc.robot.Robot;
 
@@ -20,6 +21,10 @@ public class Elevator extends Subsystem
 
   //SPEED CONTROLLER GROUP
   private final SpeedControllerGroup m_elevatorGroup;
+
+  //LIIMIT SWITCHES
+  private final DigitalInput a_topLim;
+  private final DigitalInput a_bottomLim;
 
   //DRIVETRAIN CONSTRUCTOR
   public Elevator() 
@@ -32,6 +37,10 @@ public class Elevator extends Subsystem
 
     //SPEED CONTROLLER GROUP
     this.m_elevatorGroup = new SpeedControllerGroup(this.m_elevatorOne, this.m_elevatorTwo, this.m_elevatorThree, this.m_elevatorFour);
+
+    //LIMIT SWITCHES
+    this.a_topLim = new DigitalInput(Robot.ROBOTMAP.a_topLim);
+    this.a_bottomLim = new DigitalInput(Robot.ROBOTMAP.a_bottomLim);
   }
 
   @Override
@@ -42,7 +51,14 @@ public class Elevator extends Subsystem
 
   public void move(double speed)
   {
-      this.m_elevatorGroup.set(speed);
+      if (!this.a_topLim.get() && !this.a_bottomLim.get())
+      {
+        this.m_elevatorGroup.set(speed);
+      }
+      else
+      {
+          this.m_elevatorGroup.set(0);
+      }
   }
 
   //STOP ROBOT

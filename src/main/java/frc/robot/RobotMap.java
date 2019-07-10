@@ -48,6 +48,10 @@ public class RobotMap
   public final int m_elevatorThree = 8;
   public final int m_elevatorFour = 9;
 
+  //Limit Switch Ports
+  public final int a_topLim = 0;
+  public final int a_bottomLim = 1;
+
   /*****
    * Driverstation variables
    *****/
