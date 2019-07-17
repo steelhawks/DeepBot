@@ -49,8 +49,16 @@ public class RobotMap
   public final int m_elevatorFour = 9;
 
   //Limit Switch Ports
-  public final int a_topLim = 0;
-  public final int a_bottomLim = 1;
+  public final int s_topLim = 0;
+  public final int s_bottomLim = 1;
+
+  /*****
+   * Ultrasonic variables
+   *****/
+
+  public final int s_ultraPing = 8;
+  public final int s_ultraEcho = 9;
+
 
   /*****
    * Driverstation variables
@@ -65,7 +73,11 @@ public class RobotMap
   public final int btn_translate = 1;
 
   /*****
-   * Constructor methods
+   * Pathfollower variables
    *****/
-  public RobotMap() {}
+
+  public final int ticksPerRev = 1024;
+  public final double wheelDiameter = 6.0;
+  public final double maxVelocity = 15.9;
+  public final String pathName = "PathOne";
 }

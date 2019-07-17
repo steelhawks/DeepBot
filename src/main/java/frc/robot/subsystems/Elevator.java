@@ -23,8 +23,8 @@ public class Elevator extends Subsystem
   private final SpeedControllerGroup m_elevatorGroup;
 
   //LIIMIT SWITCHES
-  private final DigitalInput a_topLim;
-  private final DigitalInput a_bottomLim;
+  private final DigitalInput s_topLim;
+  private final DigitalInput s_bottomLim;
 
   //DRIVETRAIN CONSTRUCTOR
   public Elevator() 
@@ -39,8 +39,8 @@ public class Elevator extends Subsystem
     this.m_elevatorGroup = new SpeedControllerGroup(this.m_elevatorOne, this.m_elevatorTwo, this.m_elevatorThree, this.m_elevatorFour);
 
     //LIMIT SWITCHES
-    this.a_topLim = new DigitalInput(Robot.ROBOTMAP.a_topLim);
-    this.a_bottomLim = new DigitalInput(Robot.ROBOTMAP.a_bottomLim);
+    this.s_topLim = new DigitalInput(Robot.ROBOTMAP.s_topLim);
+    this.s_bottomLim = new DigitalInput(Robot.ROBOTMAP.s_bottomLim);
   }
 
   @Override
@@ -51,14 +51,18 @@ public class Elevator extends Subsystem
 
   public void move(double speed)
   {
-      if (!this.a_topLim.get() && !this.a_bottomLim.get())
-      {
-        this.m_elevatorGroup.set(speed);
-      }
-      else
-      {
-          this.m_elevatorGroup.set(0);
-      }
+    if (!this.s_topLim.get() && speed > 0)
+    {
+      this.m_elevatorGroup.set(speed);
+    }
+    else if (!this.s_bottomLim.get() && speed < 0)
+    {
+      this.m_elevatorGroup.set(speed);
+    }
+    else
+    {
+        this.m_elevatorGroup.set(0);
+    }
   }
 
   //STOP ROBOT

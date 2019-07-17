@@ -12,11 +12,13 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 import frc.robot.commands.DiffDrive;
@@ -27,7 +29,7 @@ public class Drivetrain extends Subsystem
   private final CANSparkMax m_leftOne, m_leftTwo, m_leftThree, m_rightOne, m_rightTwo, m_rightThree;
 
   //SPEED CONTROLLER GROUPS
-  private final SpeedControllerGroup m_leftGroup, m_rightGroup;
+  public final SpeedControllerGroup m_leftGroup, m_rightGroup;
 
   //DIFFERENTIAL DRIVE
   private final DifferentialDrive diffDrive;
@@ -36,11 +38,14 @@ public class Drivetrain extends Subsystem
   private final DoubleSolenoid sol_shift;
 
   //NAVX MXP gyro
-  private final AHRS gyro;
+  public final AHRS gyro;
   private final double gyro_constant;
 
   //NEO MOTOR ENCODERS
   public CANEncoder enc_left, enc_right;
+
+  //GRAYHILL OPTICAL ENCODERS
+  public Encoder enc_leftO, enc_rightO;
 
   //DRIVETRAIN CONSTRUCTOR
   public Drivetrain() 
@@ -72,6 +77,10 @@ public class Drivetrain extends Subsystem
     //NEO MOTOR ENCODERS
     this.enc_left = this.m_leftOne.getEncoder();
     this.enc_right = this.m_rightOne.getEncoder();
+
+    //GRAYHILL OPTICAL ENCODERS
+    this.enc_leftO = new Encoder(Robot.ROBOTMAP.enc_leftA, Robot.ROBOTMAP.enc_leftB, false, EncodingType.k4X);
+    this.enc_rightO = new Encoder(Robot.ROBOTMAP.enc_rightA, Robot.ROBOTMAP.enc_rightB, false, EncodingType.k4X);
 
     //SET ROBOT TO LOW GEAR
     sol_shift.set(DoubleSolenoid.Value.kReverse);
@@ -152,36 +161,28 @@ public class Drivetrain extends Subsystem
     this.m_rightThree.setIdleMode(IdleMode.kBrake);
   }
 
-  public double getLeftEncPosition() {
+  public double getLeftEncPosition() 
+  {
     return this.enc_left.getPosition();
   }
 
-  public double getLeftEncVelocity() {
+  public double getLeftEncVelocity() 
+  {
     return this.enc_left.getVelocity();
   }
 
-  public double getRightEncPosition() {
+  public double getRightEncPosition() 
+  {
     return this.enc_right.getPosition();
   }
 
-  public double getRightEncVelocity() {
+  public double getRightEncVelocity() 
+  {
     return this.enc_right.getVelocity();
   }
 
-  public AHRS getgyro()
+  public void resetGyro() 
   {
-    return this.gyro;
-  }
-
-  public double getgyroAngle() {
-    return this.gyro.getAngle(); 
-  }
-
-  public double getgyroAxis() {
-    return this.gyro.getBoardYawAxis().board_axis.getValue();
-  }
-
-  public void resetgyro() {
     this.gyro.reset();
     this.gyro.zeroYaw();
   }
