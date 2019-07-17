@@ -17,22 +17,13 @@ public class OI
   /*****
    * Joystick Objects
    *****/
-  private final Joystick DRIVE_JOYSTICK = new Joystick(Robot.ROBOTMAP.JOYSTICK_PORT_ONE);
+  public final Joystick js_drive = new Joystick(Robot.ROBOTMAP.js_one);
+  public final Joystick js_operate = new Joystick(Robot.ROBOTMAP.js_two);
 
   public OI()
   {
-    Button SHIFT_BUTTON = new JoystickButton(getDriveJoystick(), Robot.ROBOTMAP.SHIFT_BUTTON);
-
+    Button SHIFT_BUTTON = new JoystickButton(this.js_drive, Robot.ROBOTMAP.btn_shift);
     SHIFT_BUTTON.whenPressed(new ShiftGear());
-
     SHIFT_BUTTON.close();
-  }
-
-  /*****
-   * Getter methods
-   *****/
-  public Joystick getDriveJoystick()
-  {
-    return this.DRIVE_JOYSTICK;
   }
 }

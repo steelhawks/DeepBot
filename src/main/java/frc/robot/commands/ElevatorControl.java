@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DiffDrive extends Command 
+public class ElevatorControl extends Command 
 {
-  public DiffDrive() 
+  public ElevatorControl() 
   {
-    requires(Robot.DRIVETRAIN);
+    requires(Robot.ELEVATOR);
   }
 
   @Override
@@ -23,7 +23,7 @@ public class DiffDrive extends Command
   @Override
   protected void execute() 
   {
-    Robot.DRIVETRAIN.arcadeDrive(Robot.OI.js_drive);
+    Robot.ELEVATOR.move(Robot.OI.js_operate.getRawAxis(Robot.ROBOTMAP.btn_translate));
   }
 
   @Override
@@ -38,6 +38,6 @@ public class DiffDrive extends Command
   @Override
   protected void interrupted() 
   {
-      Robot.DRIVETRAIN.stop();
+      Robot.ELEVATOR.stop();
   }
 }

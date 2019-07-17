@@ -10,42 +10,59 @@ package frc.robot;
 public class RobotMap 
 {
   /*****
-   * Drivetrain instance variables
+   * Drivetrain variables
    *****/
 
   //Right Motor Ports
-  public final int RIGHT_MOTOR_PORT_ONE = 0;
-  public final int RIGHT_MOTOR_PORT_TWO = 1;
-  public final int RIGHT_MOTOR_PORT_THREE = 2;
+  public final int m_rightOne = 0;
+  public final int m_rightTwo = 1;
+  public final int m_rightThree = 2;
 
   //Left Motor Ports
-  public final int LEFT_MOTOR_PORT_ONE = 3;
-  public final int LEFT_MOTOR_PORT_TWO = 4;
-  public final int LEFT_MOTOR_PORT_THREE = 5;
+  public final int m_leftOne = 3;
+  public final int m_leftTwo = 4;
+  public final int m_leftThree = 5;
 
   //Shifter Solenoid Ports
-  public final int SHIFT_PORT_ON = 0;
-  public final int SHIFT_PORT_OFF = 1;
+  public final int sol_shiftOn = 0;
+  public final int sol_shiftOff = 1;
 
   //Optical Encoder Ports
 
-  public final int LEFT_ENC_PORT_A = 0;
-  public final int LEFT_ENC_PORT_B = 1; 
-  public final int RIGHT_ENC_PORT_A = 2;
-  public final int RIGHT_ENC_PORT_B = 3;
+  public final int enc_leftA = 0;
+  public final int enc_leftB = 1; 
+  public final int enc_rightA = 2;
+  public final int enc_rightB = 3;
 
   //Gyro
-  public final double KP_GYRO = 0.008;
+  public final double gyro_constant = 0.008;
 
   /*****
-   * Driverstation instance variables
+   * Elevator variables
+   *****/
+
+  //Motor Ports
+
+  public final int m_elevatorOne = 6;
+  public final int m_elevatorTwo = 7;
+  public final int m_elevatorThree = 8;
+  public final int m_elevatorFour = 9;
+
+  //Limit Switch Ports
+  public final int a_topLim = 0;
+  public final int a_bottomLim = 1;
+
+  /*****
+   * Driverstation variables
    *****/
 
   //Input Ports
-  public final int JOYSTICK_PORT_ONE = 0;
+  public final int js_one = 0;
+  public final int js_two = 1;
 
   //Button ports
-  public final int SHIFT_BUTTON = 1;
+  public final int btn_shift = 1;
+  public final int btn_translate = 1;
 
   /*****
    * Constructor methods
