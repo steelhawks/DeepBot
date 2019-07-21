@@ -68,8 +68,11 @@ public class RobotMap
   public final int js_one = 0;
   public final int js_two = 1;
 
-  //Button ports
+  //Button ports driver
   public final int btn_shift = 1;
+  public final int btn_align = 3;
+
+  //Button ports gamepad
   public final int btn_translate = 1;
 
   /*****

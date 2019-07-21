@@ -58,7 +58,7 @@ public class PathFollower
   {
     if (this.leftFollower.isFinished() || this.rightFollower.isFinished() || !this.valid) 
     {
-      this.follower.stop();
+      stop();
     } 
     else 
     {
@@ -77,6 +77,11 @@ public class PathFollower
   {
     this.follower.stop();
     Robot.DRIVETRAIN.stop();
+  }
+
+  public boolean isFinished()
+  {
+    return this.leftFollower.isFinished() && this.rightFollower.isFinished();
   }
 
   public boolean isValid()

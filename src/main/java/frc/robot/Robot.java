@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Align;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
@@ -22,12 +23,18 @@ public class Robot extends TimedRobot
    * Robot Objects
    *****/
   public static RobotMap ROBOTMAP;
-  public static OI OI = new OI();
+  public static OI OI;
   public static PathFollower PATHFOLLOWER;
   public static Drivetrain DRIVETRAIN;
   public static Elevator ELEVATOR;
   public static Vision VISION;
   public static Sensors SENSORS;
+
+  /*****
+   * Auto Variables
+   *****/
+
+  private boolean autoFinished;
 
   @Override
   public void robotInit() 
@@ -40,6 +47,7 @@ public class Robot extends TimedRobot
     VISION = new Vision();
     SENSORS = new Sensors();
     Robot.PATHFOLLOWER.init();
+    this.autoFinished = false;
   }
 
   @Override
@@ -70,7 +78,15 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic() 
   {
-    Robot.PATHFOLLOWER.followPath();
+    if (!this.autoFinished)
+    {
+      while(!Robot.PATHFOLLOWER.isFinished())
+      {
+        Robot.PATHFOLLOWER.followPath();
+      }
+      new Align();
+      this.autoFinished = true;
+    }
   }
 
   @Override

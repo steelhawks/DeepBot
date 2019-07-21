@@ -66,73 +66,120 @@ public class Vision extends Subsystem
         } 
     }
 
-    //Returns the x coordinate value of the center of the hatch
+    /**
+     * Gets the x coordinate value of the center of the tape pair from Network Tables.
+     * 
+     * @return The x coordinate value of the center of the tape pair
+     */
     public double getXPos()
     {
         System.out.println("Center X Tape: " + networkTablesData.getEntry("CenterPoint X Tape").getDouble(0.0));
-       return networkTablesData.getEntry("CenterPoint X Tape").getDouble(0.0);
-
+        return networkTablesData.getEntry("CenterPoint X Tape").getDouble(0.0);
     }
 
-    //Returns the y coordinate value of the center of the hatch
+    /**
+     * Gets the y coordinate value of the center of the tape pair from Network Tables.
+     * 
+     * @return The y coordinate value of the center of the tape pair
+     */
     public double getYPos()
     {
         System.out.println("Center Y Tape: " + networkTablesData.getEntry("CenterPoint Y Tape").getDouble(0.0));
         return networkTablesData.getEntry("CenterPoint Y Tape").getDouble(0.0);
     }
 
-    //Returns the apparent calculated distance between the robot and the hatch
+    /**
+     * Gets the apparent calculated distance between the robot and the center of the tape pair from Network Tables.
+     * 
+     * @return The apparent calculated distance between the robot and the center of the tape pair
+     */
     public double getDistance()
     {
         System.out.println("Distance Tape: " + networkTablesData.getEntry("Distance Tape").getDouble(0.0));
         return networkTablesData.getEntry("Distance Tape").getDouble(0.0);
     }
 
-    //Returns the angle that the robot's line of vision and the center of the hatch creates 
+    /**
+     * Gets the angle that the ROBOT'S line of vision and the center of the tape pair creates from Network Tables.
+     * 
+     * @return The angle that the ROBOT'S line of vision and the center of the tape pair creates
+     */
     public double getNTAngle()
     {
         System.out.println("NT Angle Tape: " + networkTablesData.getEntry("Angle Tape").getDouble(0.0));
         return networkTablesData.getEntry("Angle Tape").getDouble(0.0);
     }
 
-    //Sets the angle that was returned into an angle variable that can be used
+    /**
+     * Sets the target angle for alignment.
+     * 
+     * @param double angle
+     * @return void
+     */
     public void setAngle(double angle)
     {
        this.angle = angle;
     }
 
-    //Returns the angle that the gyro needs in order to turn
+    /**
+     * Gets the target angle for alignment.
+     * 
+     * @return The target angle for alignment
+     */
     public double getAngle()
     {
         //System.out.println(this.angle);
         return this.angle;
     }
 
-    //Sets the x coordinate of the left border of the hatch
+    /**
+     * Sets the x cooridnate of the left border of the center of the tape pair.
+     * 
+     * @param double x limit
+     * @return void
+     */
     public void setXPosLeftLimit(double xPosLeftLimit)
     {
        this.xPosLeftLimit = xPosLeftLimit;
     }
 
-    //Sets the x coordinate of the right border of the hatch
+    /**
+     * Sets the x cooridnate of the right border of the center of the tape pair.
+     * 
+     * @param double x limit
+     * @return void
+     */
     public void setXPosRightLimit(double xPosRightLimit)
     {
        this.xPosRightLimit = xPosRightLimit;
     }
 
-    //Returns the x coordinate of the left border of the hatch
+    /**
+     * Gets the x cooridnate of the left border of the center of the tape pair.
+     * 
+     * @return The x cooridnate of the left border of the tape pair
+     */
     public double getXPosLeftLimit()
     {
         return this.xPosLeftLimit;
     }
    
-    //Returns the x coordinate of the right border of the hatch
+    /**
+     * Gets the x cooridnate of the right border of the center of the tape pair.
+     * 
+     * @return The x cooridnate of the right border of the tape pair
+     */
     public double getXPosRightLimit()
     {
        return this.xPosRightLimit;
     }
 
-    //Returns the difference between the right || left border and center
+    /**
+     * Returns the difference between the right or left border and center of the tape pair. The difference is the smallest between the two.
+     * 
+     * @param x position
+     * @return The difference between the right or left border and center of the tape pair
+     */
     public double getXPosDiff(double xPos)
     {
         if (xPos > 160)
@@ -142,12 +189,19 @@ public class Vision extends Subsystem
         return Math.abs(160 - xPos);
     }
 
-    //Returns whether alignment and distancing to the hatch is complete
+    /**
+     * Returns true if alignment and distancing to the center of the tape pair is complete.
+     * 
+     * @return If alignment and distancing to the center of the tape pair is complete
+     */
     public boolean isAligned()
     {
         return this.alignAngle;
     }
 
+    /**
+     * Stops alignment.
+     */
     public void end()
     {
         Robot.DRIVETRAIN.stop();
@@ -155,7 +209,9 @@ public class Vision extends Subsystem
         this.alignAngle = true;
     }
 
-    //Sets the gyro back to default zero values
+    /**
+     * Resets alignment booleans.
+     */
     public void reset()
     {
         alignAngle = false;

@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.Align;
 import frc.robot.commands.ShiftGear;
 
 public class OI 
@@ -22,8 +23,12 @@ public class OI
 
   public OI()
   {
-    Button SHIFT_BUTTON = new JoystickButton(this.js_drive, Robot.ROBOTMAP.btn_shift);
-    SHIFT_BUTTON.whenPressed(new ShiftGear());
-    SHIFT_BUTTON.close();
+    Button shift = new JoystickButton(this.js_drive, Robot.ROBOTMAP.btn_shift);
+    shift.whenPressed(new ShiftGear());
+    shift.close();
+
+    Button align = new JoystickButton(this.js_drive, Robot.ROBOTMAP.btn_align);
+    align.whenPressed(new Align());
+    align.close();
   }
 }
