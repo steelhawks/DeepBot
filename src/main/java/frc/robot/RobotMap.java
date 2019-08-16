@@ -10,6 +10,11 @@ package frc.robot;
 public class RobotMap 
 {
   /*****
+   * Identity variables
+   *****/
+  public final String robotName = "";
+
+  /*****
    * Drivetrain variables
    *****/
 

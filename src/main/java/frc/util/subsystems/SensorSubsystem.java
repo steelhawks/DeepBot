@@ -5,37 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.util.subsystems;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ShiftGear extends Command 
+public abstract class SensorSubsystem extends Subsystem
 {
+  /** Enables the subsystem. */
+  abstract public void enable();
 
-  public ShiftGear() 
-  {
-    requires(Robot.DRIVETRAIN);
-  }
+  /** Disables the subsystem. */
+  abstract public void disable();
 
-  @Override
-  protected void initialize() {}
+  /** Sends a ping to the subsystem. */
+  abstract public void ping();
 
-  @Override
-  protected void execute() 
-  {
-    Robot.DRIVETRAIN.shiftGear();
-  }
-    
-  @Override
-  protected boolean isFinished() 
-  {
-    return true;
-  }
+  /** Checks if the subsystem is functioning properly. @return True if functioning */
+  abstract public boolean isAlive();
 
   @Override
-  protected void end() {}
-
-  @Override
-  protected void interrupted() {}
+  public void initDefaultCommand() {}
 }

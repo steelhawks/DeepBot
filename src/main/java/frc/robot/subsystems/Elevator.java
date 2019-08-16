@@ -10,11 +10,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.ElevatorControl;
 import frc.robot.Robot;
+import frc.util.subsystems.MechanicalSubsystem;
 
-public class Elevator extends Subsystem 
+public class Elevator extends MechanicalSubsystem
 {
   //TALON SRX MOTORS
   private final WPI_TalonSRX m_elevatorOne, m_elevatorTwo, m_elevatorThree, m_elevatorFour;
@@ -26,7 +26,7 @@ public class Elevator extends Subsystem
   private final DigitalInput s_topLim;
   private final DigitalInput s_bottomLim;
 
-  //DRIVETRAIN CONSTRUCTOR
+  /** Elevator constructor */
   public Elevator() 
   {
     //SPARK MAX MOTORS
@@ -49,6 +49,7 @@ public class Elevator extends Subsystem
     setDefaultCommand(new ElevatorControl());
   }
 
+  /** Moves the elevator up or down. */
   public void move(double speed)
   {
     if (!this.s_topLim.get() && speed > 0)
@@ -65,9 +66,16 @@ public class Elevator extends Subsystem
     }
   }
 
-  //STOP ROBOT
-  public void stop()
+  public boolean stop()
   {
     move(0);
+    return true;
+  }
+
+  public void ping() {}
+
+  public boolean isAlive()
+  {
+    return true;
   }
 }

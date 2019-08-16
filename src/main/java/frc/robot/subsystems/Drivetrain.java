@@ -17,13 +17,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 import frc.robot.commands.DiffDrive;
+import frc.util.subsystems.MechanicalSubsystem;
 
-public class Drivetrain extends Subsystem 
+public class Drivetrain extends MechanicalSubsystem 
 {
   //SPARK MAX MOTORS
   private final CANSparkMax m_leftOne, m_leftTwo, m_leftThree, m_rightOne, m_rightTwo, m_rightThree;
@@ -47,7 +47,7 @@ public class Drivetrain extends Subsystem
   //GRAYHILL OPTICAL ENCODERS
   public Encoder enc_leftO, enc_rightO;
 
-  //DRIVETRAIN CONSTRUCTOR
+  /** Drivetrain constructor. */
   public Drivetrain() 
   {
     //SPARK MAX LEFT MOTORS
@@ -90,56 +90,70 @@ public class Drivetrain extends Subsystem
   }
 
   @Override
-  public void initDefaultCommand() {
+  public void initDefaultCommand() 
+  {
     setDefaultCommand(new DiffDrive());
   }
 
-  //DRIVING METHOD
-  public void arcadeDrive(Joystick stick) {
+  /** Drives the robot with the arcadeDrive() method for differental drive robots. */
+  public void arcadeDrive(Joystick stick) 
+  {
     this.diffDrive.arcadeDrive(stick.getY(), -stick.getTwist());
   }
 
-  //SHIFTING METHOD -- if { LOW } else { HIGH }
-  public void shiftGear() {
-    if(sol_shift.get() == DoubleSolenoid.Value.kForward) {
+  /** Toggles between high and low gear. */
+  public void shiftGear() 
+  {
+    if(sol_shift.get() == DoubleSolenoid.Value.kForward) 
+    {
       this.sol_shift.set(DoubleSolenoid.Value.kReverse);
-    } else {
+    } 
+    else 
+    {
       this.sol_shift.set(DoubleSolenoid.Value.kForward);
     }
   }
 
-  //MOVING STRAIGHT USING THE gyro METHOD
+  /** Moves the robot straight at the set speed. */
   public void gyroMoveStraight(double speed)
   {
     this.diffDrive.arcadeDrive(speed, -this.gyro.getAngle() * this.gyro_constant);
   }
 
-  //MOVING STRAIGHT USING gyro AND ANGLE VALUE METHOD
-  public void gyroMoveStraight(double speed, double angle)
+  /** Moves the robot towards the set angle at the set speed. */
+  public void angleMoveStraight(double speed, double angle)
   {
     this.diffDrive.arcadeDrive(-speed, -angle * this.gyro_constant);
   }
 
-  //ROTATE ROBOT
+  /** Rotates the robot. */
   public void rotate(double speed)
   {
     this.m_leftGroup.set(speed);
     this.m_rightGroup.set(speed);
   }
 
-  //STOP ROBOT
-  public void stop()
+  public boolean stop()
   {
     rotate(0);
+    return true;
   }
 
-  //CONVERT AN INT SPEED INTO A DECIMAL SPEED
+  public void ping() {}
+
+  public boolean isAlive()
+  {
+    return this.diffDrive.isAlive();
+  }
+
+  /** Convert an integer to a speed decimal.
+   *  @return speed decimal */
   public double decimalSpeed(double speed)
   {
     return ((int)(((speed + 350) / 700.0) * 100) / 100.0);
   }
 
-  //SET MOTORS TO COAST
+  /** Set motors to coast. */
   public void setMotorsCoast()
   {
     this.m_leftOne.setIdleMode(IdleMode.kCoast);
@@ -150,7 +164,7 @@ public class Drivetrain extends Subsystem
     this.m_rightThree.setIdleMode(IdleMode.kCoast);
   }
 
-  //SET MOTORS TO BRAKE
+  /** Sets motors to brake. */
   public void setMotorsBrake()
   {
     this.m_leftOne.setIdleMode(IdleMode.kCoast);
@@ -161,26 +175,33 @@ public class Drivetrain extends Subsystem
     this.m_rightThree.setIdleMode(IdleMode.kBrake);
   }
 
+  /** Gets the left encoder position @return left encoder position */
   public double getLeftEncPosition() 
   {
     return this.enc_left.getPosition();
   }
 
+  /** Gets the left encoder velcoity @return left encoder velocity */
   public double getLeftEncVelocity() 
   {
     return this.enc_left.getVelocity();
   }
 
+  /** Gets the right encoder position @return right encoder position */
   public double getRightEncPosition() 
   {
     return this.enc_right.getPosition();
   }
 
+  /** Gets the right encoder velocity @return right encoder velocity */
   public double getRightEncVelocity() 
   {
     return this.enc_right.getVelocity();
   }
 
+  /**
+   * Reset the robot gyro.
+   */
   public void resetGyro() 
   {
     this.gyro.reset();

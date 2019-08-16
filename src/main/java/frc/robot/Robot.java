@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Align;
+import frc.robot.sensors.Ultra;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Sensors;
+import frc.robot.vision.Tape;
 
-public class Robot extends TimedRobot 
+public class Robot extends TimedRobot
 {
   /*****
    * Robot Objects
@@ -27,8 +27,8 @@ public class Robot extends TimedRobot
   public static PathFollower PATHFOLLOWER;
   public static Drivetrain DRIVETRAIN;
   public static Elevator ELEVATOR;
-  public static Vision VISION;
-  public static Sensors SENSORS;
+  public static Tape TAPE;
+  public static Ultra ULTRA;
 
   /*****
    * Auto Variables
@@ -44,8 +44,8 @@ public class Robot extends TimedRobot
     PATHFOLLOWER = new PathFollower();
     DRIVETRAIN = new Drivetrain();
     ELEVATOR = new Elevator();
-    VISION = new Vision();
-    SENSORS = new Sensors();
+    TAPE = new Tape();
+    ULTRA = new Ultra();
     Robot.PATHFOLLOWER.init();
     this.autoFinished = false;
   }

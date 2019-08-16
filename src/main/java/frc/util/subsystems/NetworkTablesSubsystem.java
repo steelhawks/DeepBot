@@ -5,37 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.util.subsystems;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.networktables.*;
 
-public class ShiftGear extends Command 
+public abstract class NetworkTablesSubsystem extends SensorSubsystem
 {
+  private static NetworkTableInstance networkTables = NetworkTableInstance.getDefault();
 
-  public ShiftGear() 
+  public static double getDouble(String tableName, String dataName)
   {
-    requires(Robot.DRIVETRAIN);
+    return networkTables.getTable(tableName).getEntry(dataName).getDouble(0.0);
   }
 
   @Override
-  protected void initialize() {}
-
-  @Override
-  protected void execute() 
-  {
-    Robot.DRIVETRAIN.shiftGear();
-  }
-    
-  @Override
-  protected boolean isFinished() 
-  {
-    return true;
-  }
-
-  @Override
-  protected void end() {}
-
-  @Override
-  protected void interrupted() {}
+  public void initDefaultCommand() {}
 }

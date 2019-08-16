@@ -23,6 +23,7 @@ public class PathFollower
 
   private boolean valid = false;
 
+  /**Initiate pathweaver by loading the paths and creating all required objects. */
   public void init()
   {
     try
@@ -54,6 +55,7 @@ public class PathFollower
     }
   }
 
+  /** Adjust the heading of the robot and motor group speeds in order to follow the path. */
   public void followPath() 
   {
     if (this.leftFollower.isFinished() || this.rightFollower.isFinished() || !this.valid) 
@@ -73,17 +75,20 @@ public class PathFollower
     }
   }
 
+  /** Stop pathfollower and the robot. */
   public void stop()
   {
     this.follower.stop();
     Robot.DRIVETRAIN.stop();
   }
 
+  /** Returns if the pathfollower has finished @return if patfollower has finished */
   public boolean isFinished()
   {
     return this.leftFollower.isFinished() && this.rightFollower.isFinished();
   }
 
+  /** Checks if the loaded path has been found and is valid @return if the loaded path is found and valid */
   public boolean isValid()
   {
     return this.valid;

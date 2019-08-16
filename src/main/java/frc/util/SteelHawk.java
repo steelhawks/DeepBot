@@ -5,37 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.util;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-
-public class ShiftGear extends Command 
+public class SteelHawk
 {
-
-  public ShiftGear() 
+  public SteelHawk()
   {
-    requires(Robot.DRIVETRAIN);
-  }
-
-  @Override
-  protected void initialize() {}
-
-  @Override
-  protected void execute() 
-  {
-    Robot.DRIVETRAIN.shiftGear();
-  }
+    /*
     
-  @Override
-  protected boolean isFinished() 
-  {
-    return true;
+    */
   }
-
-  @Override
-  protected void end() {}
-
-  @Override
-  protected void interrupted() {}
 }
