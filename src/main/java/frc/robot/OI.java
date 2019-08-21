@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.Align;
+import frc.robot.commands.AlignTape;
 import frc.robot.commands.ShiftGear;
 
 public class OI 
@@ -28,7 +28,7 @@ public class OI
     shift.close();
 
     Button align = new JoystickButton(this.js_drive, Robot.ROBOTMAP.btn_align);
-    align.whenPressed(new Align());
+    align.whenPressed(new AlignTape());
     align.close();
   }
 }

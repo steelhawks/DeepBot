@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Align;
+import frc.robot.commands.AlignTape;
 import frc.robot.sensors.Ultra;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot
       {
         Robot.PATHFOLLOWER.followPath();
       }
-      new Align();
+      new AlignTape();
       this.autoFinished = true;
     }
   }

@@ -14,6 +14,7 @@ public class ElevatorControl extends Command
 {
   public ElevatorControl() 
   {
+    super("ElevatorControl");
     requires(Robot.ELEVATOR);
   }
 

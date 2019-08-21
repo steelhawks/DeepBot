@@ -23,8 +23,7 @@ public class Elevator extends MechanicalSubsystem
   private final SpeedControllerGroup m_elevatorGroup;
 
   //LIIMIT SWITCHES
-  private final DigitalInput s_topLim;
-  private final DigitalInput s_bottomLim;
+  private final DigitalInput s_topLim, s_bottomLim;
 
   /** Elevator constructor */
   public Elevator() 

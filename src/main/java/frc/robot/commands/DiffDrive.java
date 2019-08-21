@@ -14,6 +14,7 @@ public class DiffDrive extends Command
 {
   public DiffDrive() 
   {
+    super("DiffDrive");
     requires(Robot.DRIVETRAIN);
   }
 

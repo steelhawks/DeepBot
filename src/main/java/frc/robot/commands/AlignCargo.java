@@ -10,10 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Align extends Command
+public class AlignCargo extends Command
 {
-  public Align() 
+  public AlignCargo() 
   {
+    super("AlignCargo");
     requires(Robot.DRIVETRAIN);
     requires(Robot.TAPE);
     requires(Robot.ULTRA);
@@ -23,9 +24,10 @@ public class Align extends Command
   protected void initialize()
   {
     Robot.DRIVETRAIN.resetGyro();
+    Robot.DRIVETRAIN.setAcceleration(Robot.ROBOTMAP.maxAccelerationRate);
     Robot.TAPE.enable();
     Robot.ULTRA.enable();
-    Robot.TAPE.setAngle(Robot.TAPE.getNTAngle("Tape"));
+    Robot.TAPE.setAngle(Robot.TAPE.getNTAngle("Cargo"));
     Robot.TAPE.setXPosLeftLimit(157.5);
     Robot.TAPE.setXPosRightLimit(162.5);
   }
@@ -46,6 +48,7 @@ public class Align extends Command
   protected void end()
   {
     Robot.DRIVETRAIN.stop();
+    Robot.DRIVETRAIN.setAcceleration(0.0);
     Robot.TAPE.disable();
     Robot.ULTRA.disable();
   }

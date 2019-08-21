@@ -42,6 +42,9 @@ public class RobotMap
   //Gyro
   public final double gyro_constant = 0.008;
 
+  //Max Acceleration Rate
+  public final double maxAccelerationRate = 1.9;
+
   /*****
    * Elevator variables
    *****/

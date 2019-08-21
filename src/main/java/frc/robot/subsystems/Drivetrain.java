@@ -175,6 +175,17 @@ public class Drivetrain extends MechanicalSubsystem
     this.m_rightThree.setIdleMode(IdleMode.kBrake);
   }
 
+  /** Sets max acceleration. */
+  public void setAcceleration(double rate)
+  {
+    this.m_leftOne.setOpenLoopRampRate(rate);
+    this.m_leftTwo.setOpenLoopRampRate(rate);
+    this.m_leftThree.setOpenLoopRampRate(rate);
+    this.m_rightOne.setOpenLoopRampRate(rate);
+    this.m_rightTwo.setOpenLoopRampRate(rate);
+    this.m_rightThree.setOpenLoopRampRate(rate);
+  }
+
   /** Gets the left encoder position @return left encoder position */
   public double getLeftEncPosition() 
   {

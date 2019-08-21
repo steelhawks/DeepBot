@@ -9,7 +9,7 @@
 
 package frc.util;
 
-public abstract class ThreeLaws 
+public abstract class ThreeLaws
 {
   public void ZeroithLaw()
   {

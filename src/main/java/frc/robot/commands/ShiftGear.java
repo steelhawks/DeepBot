@@ -15,6 +15,7 @@ public class ShiftGear extends Command
 
   public ShiftGear() 
   {
+    super("ShiftGear");
     requires(Robot.DRIVETRAIN);
   }
 
