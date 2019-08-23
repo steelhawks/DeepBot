@@ -176,7 +176,7 @@ public class Drivetrain extends MechanicalSubsystem
   }
 
   /** Sets max acceleration. */
-  public void setAcceleration(double rate)
+  public void setAccelerationRate(double rate)
   {
     this.m_leftOne.setOpenLoopRampRate(rate);
     this.m_leftTwo.setOpenLoopRampRate(rate);

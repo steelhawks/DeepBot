@@ -1,0 +1,6 @@
+# makes this editorconfig overwrite all other config files
+root = true
+ 
+[*.java]
+indent_style = space
+indent_size = 2

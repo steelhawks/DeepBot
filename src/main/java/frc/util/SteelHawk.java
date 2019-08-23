@@ -7,7 +7,7 @@
 
 package frc.util;
 
-public class SteelHawk extends ThreeLaws
+public abstract class SteelHawk extends ThreeLaws
 {
   public SteelHawk()
   {

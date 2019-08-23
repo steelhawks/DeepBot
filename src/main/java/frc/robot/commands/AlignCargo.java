@@ -24,7 +24,7 @@ public class AlignCargo extends Command
   protected void initialize()
   {
     Robot.DRIVETRAIN.resetGyro();
-    Robot.DRIVETRAIN.setAcceleration(Robot.ROBOTMAP.maxAccelerationRate);
+    Robot.DRIVETRAIN.setAccelerationRate(Robot.ROBOTMAP.maxAccelerationRate);
     Robot.TAPE.enable();
     Robot.ULTRA.enable();
     Robot.TAPE.setAngle(Robot.TAPE.getNTAngle("Cargo"));
@@ -48,7 +48,7 @@ public class AlignCargo extends Command
   protected void end()
   {
     Robot.DRIVETRAIN.stop();
-    Robot.DRIVETRAIN.setAcceleration(0.0);
+    Robot.DRIVETRAIN.setAccelerationRate(0.0);
     Robot.TAPE.disable();
     Robot.ULTRA.disable();
   }
