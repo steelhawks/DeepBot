@@ -11,11 +11,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AlignTape;
-import frc.robot.sensors.Ultra;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.vision.Tape;
+import frc.robot.subsystems.Arms;
 
 public class Robot extends TimedRobot
 {
@@ -24,11 +22,10 @@ public class Robot extends TimedRobot
    *****/
   public static RobotMap ROBOTMAP;
   public static OI OI;
-  public static PathFollower PATHFOLLOWER;
   public static Drivetrain DRIVETRAIN;
   public static Elevator ELEVATOR;
-  public static Tape TAPE;
-  public static Ultra ULTRA;
+  public static Arms ARMS;
+  public static PathFollower PATHFOLLOWER;
 
   /*****
    * Auto Variables
@@ -41,11 +38,10 @@ public class Robot extends TimedRobot
   {
     ROBOTMAP = new RobotMap();
     OI = new OI();
-    PATHFOLLOWER = new PathFollower();
     DRIVETRAIN = new Drivetrain();
     ELEVATOR = new Elevator();
-    TAPE = new Tape();
-    ULTRA = new Ultra();
+    ARMS = new Arms();
+    PATHFOLLOWER = new PathFollower();
     Robot.PATHFOLLOWER.init();
     this.autoFinished = false;
   }
@@ -66,6 +62,8 @@ public class Robot extends TimedRobot
     Scheduler.getInstance().removeAll();
     Scheduler.getInstance().disable();
     DRIVETRAIN.stop();
+    ELEVATOR.stop();
+    ARMS.stop();
     Robot.PATHFOLLOWER.stop();
   }
 
@@ -73,7 +71,10 @@ public class Robot extends TimedRobot
   public void disabledPeriodic() {}
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() 
+  {
+    Scheduler.getInstance().enable();
+  }
 
   @Override
   public void autonomousPeriodic() 
@@ -84,7 +85,6 @@ public class Robot extends TimedRobot
       {
         Robot.PATHFOLLOWER.followPath();
       }
-      new AlignTape();
       this.autoFinished = true;
     }
   }

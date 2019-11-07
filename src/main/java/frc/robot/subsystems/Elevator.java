@@ -17,7 +17,7 @@ import frc.util.subsystems.MechanicalSubsystem;
 public class Elevator extends MechanicalSubsystem
 {
   //TALON SRX MOTORS
-  private final WPI_TalonSRX m_elevatorOne, m_elevatorTwo, m_elevatorThree, m_elevatorFour;
+  private final WPI_TalonSRX m_elevator;
 
   //SPEED CONTROLLER GROUP
   private final SpeedControllerGroup m_elevatorGroup;
@@ -29,13 +29,10 @@ public class Elevator extends MechanicalSubsystem
   public Elevator() 
   {
     //SPARK MAX MOTORS
-    this.m_elevatorOne = new WPI_TalonSRX(Robot.ROBOTMAP.m_elevatorOne);
-    this.m_elevatorTwo = new WPI_TalonSRX(Robot.ROBOTMAP.m_elevatorTwo);
-    this.m_elevatorThree = new WPI_TalonSRX(Robot.ROBOTMAP.m_elevatorThree);
-    this.m_elevatorFour = new WPI_TalonSRX(Robot.ROBOTMAP.m_elevatorFour);
+    this.m_elevator = new WPI_TalonSRX(Robot.ROBOTMAP.m_elevator);
 
     //SPEED CONTROLLER GROUP
-    this.m_elevatorGroup = new SpeedControllerGroup(this.m_elevatorOne, this.m_elevatorTwo, this.m_elevatorThree, this.m_elevatorFour);
+    this.m_elevatorGroup = new SpeedControllerGroup(this.m_elevator);
 
     //LIMIT SWITCHES
     this.s_topLim = new DigitalInput(Robot.ROBOTMAP.s_topLim);

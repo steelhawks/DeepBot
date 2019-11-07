@@ -43,7 +43,7 @@ public class RobotMap
   public final double gyro_constant = 0.008;
 
   //Max Acceleration Rate
-  public final double maxAccelerationRate = 1.9;
+  public final double maxAccelerationRate = 0;
 
   /*****
    * Elevator variables
@@ -51,22 +51,22 @@ public class RobotMap
 
   //Motor Ports
 
-  public final int m_elevatorOne = 6;
-  public final int m_elevatorTwo = 7;
-  public final int m_elevatorThree = 8;
-  public final int m_elevatorFour = 9;
+  public final int m_elevator = 6;
 
   //Limit Switch Ports
   public final int s_topLim = 0;
   public final int s_bottomLim = 1;
 
   /*****
-   * Ultrasonic variables
+   * Arm variables
    *****/
 
-  public final int s_ultraPing = 8;
-  public final int s_ultraEcho = 9;
+  //Motor Ports
 
+  public final int m_arm = 7;
+
+  //speed
+  public final double armSpeed = 0.8;
 
   /*****
    * Driverstation variables
@@ -78,10 +78,11 @@ public class RobotMap
 
   //Button ports driver
   public final int btn_shift = 1;
-  public final int btn_align = 3;
 
   //Button ports gamepad
-  public final int btn_translate = 1;
+  public final int stick_translate = 1;
+  public final int btn_intake = 1;
+  public final int btn_outtake = 2;
 
   /*****
    * Pathfollower variables

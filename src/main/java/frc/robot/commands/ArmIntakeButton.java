@@ -10,12 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ElevatorControl extends Command 
+public class ArmIntakeButton extends Command 
 {
-  public ElevatorControl() 
+
+  public ArmIntakeButton() 
   {
-    super("ElevatorControl");
-    requires(Robot.ELEVATOR);
+    super("ArmIntake");
+    requires(Robot.ARMS);
   }
 
   @Override
@@ -24,21 +25,24 @@ public class ElevatorControl extends Command
   @Override
   protected void execute() 
   {
-    Robot.ELEVATOR.move(Robot.OI.js_operate.getRawAxis(Robot.ROBOTMAP.stick_translate));
+    Robot.ARMS.armIntakeButton();
   }
 
   @Override
   protected boolean isFinished() 
   {
-    return false;
+    return true;
   }
 
-  @Override
-  protected void end() {}
+ @Override
+  protected void end() 
+  {
+    Robot.ARMS.stop();
+  }
 
   @Override
   protected void interrupted() 
   {
-      Robot.ELEVATOR.stop();
+    end();
   }
 }

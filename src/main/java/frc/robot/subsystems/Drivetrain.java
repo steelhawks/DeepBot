@@ -87,6 +87,9 @@ public class Drivetrain extends MechanicalSubsystem
 
     //SET MOTORS TO BREAK
     setMotorsBrake();
+
+    //SET MAX LOOP RATE
+    setAccelerationRate(Robot.ROBOTMAP.maxAccelerationRate);
   }
 
   @Override
@@ -114,18 +117,6 @@ public class Drivetrain extends MechanicalSubsystem
     }
   }
 
-  /** Moves the robot straight at the set speed. */
-  public void gyroMoveStraight(double speed)
-  {
-    this.diffDrive.arcadeDrive(speed, -this.gyro.getAngle() * this.gyro_constant);
-  }
-
-  /** Moves the robot towards the set angle at the set speed. */
-  public void angleMoveStraight(double speed, double angle)
-  {
-    this.diffDrive.arcadeDrive(-speed, -angle * this.gyro_constant);
-  }
-
   /** Rotates the robot. */
   public void rotate(double speed)
   {
@@ -144,13 +135,6 @@ public class Drivetrain extends MechanicalSubsystem
   public boolean isAlive()
   {
     return this.diffDrive.isAlive();
-  }
-
-  /** Convert an integer to a speed decimal.
-   *  @return speed decimal */
-  public double decimalSpeed(double speed)
-  {
-    return ((int)(((speed + 350) / 700.0) * 100) / 100.0);
   }
 
   /** Set motors to coast. */
