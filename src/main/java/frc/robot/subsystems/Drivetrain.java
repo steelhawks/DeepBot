@@ -39,7 +39,6 @@ public class Drivetrain extends MechanicalSubsystem
 
   //NAVX MXP gyro
   public final AHRS gyro;
-  private final double gyro_constant;
 
   //NEO MOTOR ENCODERS
   public CANEncoder enc_left, enc_right;
@@ -69,7 +68,6 @@ public class Drivetrain extends MechanicalSubsystem
 
     //NAVX MXP GYRO
     this.gyro = new AHRS(SPI.Port.kMXP);
-    this.gyro_constant = Robot.ROBOTMAP.gyro_constant;
 
     //SHIFTING SOLENOIDS
     this.sol_shift = new DoubleSolenoid(Robot.ROBOTMAP.sol_shiftOn, Robot.ROBOTMAP.sol_shiftOff);
