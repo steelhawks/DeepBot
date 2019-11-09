@@ -57,6 +57,11 @@ public class RobotMap
   public final int s_topLim = 0;
   public final int s_bottomLim = 1;
 
+  //Encoder Limits
+  public final int topLim = -1;
+  public final int bottomLim = -1;
+  
+  
   /*****
    * Pivot variables
    *****/
@@ -89,7 +94,7 @@ public class RobotMap
 
   //Button ports gamepad
   public final int stick_translate = 1;
-  public final int stick_pivot = 1;
+  public final int stick_pivot = 2;
   public final int btn_intake = 1;
   public final int btn_outtake = 2;
 
@@ -97,8 +102,8 @@ public class RobotMap
    * Pathfollower variables
    *****/
 
-  public final int ticksPerRev = 0;
-  public final double wheelDiameter = 0;
-  public final double maxVelocity = 0;
-  public final String pathName = null;
+  public final int ticksPerRev = -1;
+  public final double wheelDiameter = -1.0;
+  public final double maxVelocity = -1.0;
+  public final String pathName = "PathOne";
 }
