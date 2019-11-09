@@ -8,58 +8,39 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.Robot;
-import frc.robot.commands.ElevatorControl;
+import frc.robot.commands.PivotControl;
 import frc.util.subsystems.MechanicalSubsystem;
 
-public class Elevator extends MechanicalSubsystem
+public class Pivot extends MechanicalSubsystem
 {
   //TALON SRX MOTORS
-  private final WPI_TalonSRX m_elevator;
+  private final WPI_TalonSRX m_pivot;
 
   //SPEED CONTROLLER GROUP
-  private final SpeedControllerGroup m_elevatorGroup;
-
-  //LIIMIT SWITCHES
-  private final DigitalInput s_topLim, s_bottomLim;
+  private final SpeedControllerGroup m_pivotGroup;
 
   /** Elevator constructor */
-  public Elevator() 
+  public Pivot() 
   {
     //SPARK MAX MOTORS
-    this.m_elevator = new WPI_TalonSRX(Robot.ROBOTMAP.m_elevator);
+    this.m_pivot = new WPI_TalonSRX(Robot.ROBOTMAP.m_pivot);
 
     //SPEED CONTROLLER GROUP
-    this.m_elevatorGroup = new SpeedControllerGroup(this.m_elevator);
-
-    //LIMIT SWITCHES
-    this.s_topLim = new DigitalInput(Robot.ROBOTMAP.s_topLim);
-    this.s_bottomLim = new DigitalInput(Robot.ROBOTMAP.s_bottomLim);
+    this.m_pivotGroup = new SpeedControllerGroup(this.m_pivot);
   }
 
   @Override
   public void initDefaultCommand() 
   {
-    setDefaultCommand(new ElevatorControl());
+    setDefaultCommand(new PivotControl());
   }
 
   /** Moves the elevator up or down. */
   public void move(double speed)
   {
-    if (!this.s_topLim.get() && speed > 0)
-    {
-      this.m_elevatorGroup.set(speed);
-    }
-    else if (!this.s_bottomLim.get() && speed < 0)
-    {
-      this.m_elevatorGroup.set(speed);
-    }
-    else
-    {
-        this.m_elevatorGroup.set(0);
-    }
+    this.m_pivotGroup.set(0);
   }
 
   public boolean stop()

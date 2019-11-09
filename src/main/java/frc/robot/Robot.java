@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Arms;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Arms;
+import frc.robot.subsystems.Pivot;
 
 public class Robot extends TimedRobot
 {
@@ -22,9 +23,10 @@ public class Robot extends TimedRobot
    *****/
   public static RobotMap ROBOTMAP;
   public static OI OI;
+  public static Arms ARMS;
   public static Drivetrain DRIVETRAIN;
   public static Elevator ELEVATOR;
-  public static Arms ARMS;
+  public static Pivot PIVOT;
   public static PathFollower PATHFOLLOWER;
 
   /*****
@@ -38,9 +40,10 @@ public class Robot extends TimedRobot
   {
     ROBOTMAP = new RobotMap();
     OI = new OI();
+    ARMS = new Arms();
     DRIVETRAIN = new Drivetrain();
     ELEVATOR = new Elevator();
-    ARMS = new Arms();
+    PIVOT = new Pivot();
     PATHFOLLOWER = new PathFollower();
     Robot.PATHFOLLOWER.init();
     this.autoFinished = false;
